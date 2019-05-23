@@ -4,9 +4,11 @@ package stickmanwars;
 
 public enum ID {
     Weapon(),
-    StickMan(),
+    StickMan1(),
+    StickMan2,
     Terrain(),
     Barricade(),
     Pack(),
-    Castle;    
+    Castle,
+    Castle2
 }

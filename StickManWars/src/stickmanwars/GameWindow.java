@@ -1,12 +1,11 @@
 
 package stickmanwars;
 
-import java.awt.Canvas;
-import java.awt.Dimension;
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 
 
-public class GameWindow extends Canvas{
+public class GameWindow extends Canvas {
     public GameWindow(int width, int height, String tittle, Game game)
     {
         JFrame frame = new JFrame(tittle);

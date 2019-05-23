@@ -1,10 +1,7 @@
 
 package stickmanwars;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 
 public class StickMan extends GameObject implements ICollide{
 
@@ -40,7 +37,7 @@ public class StickMan extends GameObject implements ICollide{
         {
             // this code could be used at any class by the same way, just implement ICollide 
             GameObject tempObject = handler.objects.get(i);
-            if(tempObject.getId() == ID.StickMan)
+            if (tempObject.getId() == ID.StickMan1)
             {
                 // collision code 
             }

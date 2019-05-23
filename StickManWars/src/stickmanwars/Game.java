@@ -1,9 +1,7 @@
 
 package stickmanwars;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
@@ -21,7 +19,7 @@ public class Game extends Canvas implements Runnable{
         hud = new HUD();
         this.addKeyListener(new KeyInput(handler));
         new GameWindow(WIDTH, HEIGHT, "Stick Man Wars", this);
-        handler.addObject(new StickMan(800, 500, ID.StickMan, handler));
+        handler.addObject(new StickMan(800, 500, ID.StickMan1, handler));
         //add objects here, but remember to set the dimension in the class's constructor using setter method
     }
     
@@ -33,26 +31,24 @@ public class Game extends Canvas implements Runnable{
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long timer = System.currentTimeMillis();
+        int updates = 0;
         int frames = 0;
-        while(running)
-        {
+        while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
-            while(delta >=1)
-            {
+            while (delta >= 1) {
                 tick();
+                updates++;
                 delta--;
             }
-            if(running)
             render();
             frames++;
 
-            if(System.currentTimeMillis() - timer > 1000)
-            {
+            if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("FPS: "+ frames);
                 frames = 0;
+                updates = 0;
             }
         }
         stop();
@@ -71,10 +67,13 @@ public class Game extends Canvas implements Runnable{
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        ///////////////////////////////
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 1920, 1080);
         handler.render(g);
         hud.render(g);
+
+        //////////////////////////////
         g.dispose();
         bs.show();     
     }
