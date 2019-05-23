@@ -18,7 +18,7 @@ public class KeyInput extends KeyAdapter{
         for(int i=0; i < handler.objects.size(); i++ )
         {
             GameObject tempObject = handler.objects.get(i);
-            if(tempObject.getId() == ID.StickMan){
+            if (tempObject.getId() == ID.StickMan1) {
                 if(key == KeyEvent.VK_UP){
                 tempObject.setY(tempObject.getY()-10);
                 }

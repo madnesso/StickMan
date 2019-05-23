@@ -1,8 +1,7 @@
 
 package stickmanwars;
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 
 public final class AssaultRifle extends Weapon{
 
@@ -26,7 +25,7 @@ public final class AssaultRifle extends Weapon{
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(this.getX(), this.getY(), this.getDimention().width, this.getDimention().height);
+        return new Rectangle((int) this.getX(), (int) this.getY(), this.getDimention().width, this.getDimention().height);
     }
 
 }

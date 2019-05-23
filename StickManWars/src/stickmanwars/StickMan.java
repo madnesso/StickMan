@@ -6,13 +6,14 @@ import java.awt.*;
 public class StickMan extends GameObject implements ICollide{
 
     private Handler handler;
-    private int Health;
+    private float Health;
     private Weapon weapon;
     private ArmorPack armor;
     private Barricade block;
     private int meleeDamage;
+    private float gravity = 0.5f;
 
-    public int getHealth() {
+    public float getHealth() {
         return Health;
     }
 
@@ -69,18 +70,21 @@ public class StickMan extends GameObject implements ICollide{
       setX(clamp(getX(), 0, Game.WIDTH-100));
       setY(clamp(getY(), 0, Game.HEIGHT-120));
       Collision();
+        if (jumping || falling) {
+            velY += gravity;
+        }
     }
 
     @Override
     public void render(Graphics g) {
         // here stickMan image should be done, remember to animate it
         g.setColor(Color.BLUE);
-        g.fillRect(getX(), getY(), getDimention().width, getDimention().height);
+        g.fillRect((int) getX(), (int) getY(), getDimention().width, getDimention().height);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(this.getX(), this.getY(), this.getDimention().width, this.getDimention().height);
+        return new Rectangle((int) this.getX(), (int) this.getY(), this.getDimention().width, this.getDimention().height);
     }
 
     public Weapon getWeapon() {

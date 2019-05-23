@@ -1,16 +1,31 @@
 
 package stickmanwars;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 
 public abstract class GameObject implements IClamp{
-    private int x,y;
-    private int velX,velY;
+    protected float x, y;
+    protected float velX, velY;
     private ID id;
     private Dimension dimention;
+    protected boolean falling = true;
+    protected boolean jumping = false;
 
+    public boolean isFalling() {
+        return falling;
+    }
+
+    public void setFalling(boolean falling) {
+        this.falling = falling;
+    }
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
     public GameObject(int x, int y, ID id) {
         this.x = x;
         this.y = y;
@@ -25,23 +40,23 @@ public abstract class GameObject implements IClamp{
         this.dimention = dimention;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = clamp(x,0,Game.WIDTH);
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = clamp(y,0,Game.HEIGHT);
     }
 
-    public int getVelX() {
+    public float getVelX() {
         return velX;
     }
 
@@ -49,7 +64,7 @@ public abstract class GameObject implements IClamp{
         this.velX = clamp(velX,-50,50);
     }
 
-    public int getVelY() {
+    public float getVelY() {
         return velY;
     }
 
@@ -70,8 +85,8 @@ public abstract class GameObject implements IClamp{
     public abstract void render(Graphics g);
     
     public abstract Rectangle getBounds();
-    
-    public int clamp(int var, int min, int max) {
+
+    public float clamp(float var, int min, int max) {
     if(var >= max)
         return var = max;
     else if(var <= min)
