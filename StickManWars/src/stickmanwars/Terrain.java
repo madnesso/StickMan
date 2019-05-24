@@ -14,7 +14,7 @@ public class Terrain extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(tex.images[0], (int) x, (int) y, null);
+        g.drawImage(tex.images[0], (int) x, (int) y, 32, 32, null);
         g.setColor(Color.yellow);
         g.drawRect((int) x, (int) y, getBounds().width, getBounds().height);
     }

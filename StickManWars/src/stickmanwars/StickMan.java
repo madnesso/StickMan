@@ -7,25 +7,19 @@ public class StickMan extends GameObject implements ICollide{
     private int Width = 50, Height = 150 / 2;
     private Handler handler;
     private float Health;
-    private Weapon weapon;
     private ArmorPack armor;
     private Barricade block;
     private int meleeDamage;
     private float MaxSpeed = 10;
     private float gravity = 0.5f;
-    public float getHealth() {
-        return Health;
-    }
+    private Game game;
 
-    public void setHealth(int Health) {
-        //example on how to use clamp
-        this.Health = clamp(Health,0,100);
-    }
-    
-    public StickMan(int x, int y, ID id, Handler handler) {
+    public StickMan(int x, int y, ID id, Handler handler, Game game) {
         super(x, y, id);
         this.setDimention(new Dimension(100, 100));
         this.handler = handler;
+        this.game = game;
+
     }
     
     public void MeleeDamage(){
@@ -44,7 +38,11 @@ public class StickMan extends GameObject implements ICollide{
             }
             if(tempObject.getId() == ID.Weapon)
             {
-                //collision code
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    game.ammo += 10;
+                    game.speed = 10;
+                    handler.removeObject(tempObject);
+                }
             }
             if(tempObject.getId() == ID.Barricade)
             {
@@ -121,12 +119,5 @@ public class StickMan extends GameObject implements ICollide{
     public Rectangle getBoundsTop() {
         return new Rectangle((int) x + Width / 4, (int) y, Width / 2, Height / 2);
     }
-    public Weapon getWeapon() {
-        return weapon;
-    }
 
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
-    
 }

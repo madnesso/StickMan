@@ -9,7 +9,7 @@ public class Weapon extends GameObject{
     private Handler handler;
     private int damage;
     private int range;
-    public int fireRate;
+    public int fireRate = 5;
     
     public Weapon(int x, int y, ID id, Handler handler) {
         super(x, y, id);
@@ -54,6 +54,6 @@ public class Weapon extends GameObject{
     public void setFireRate(int fireRate) {
         this.fireRate = fireRate;
     }
-    
-    
+
+
 }

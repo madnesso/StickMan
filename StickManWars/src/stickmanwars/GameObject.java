@@ -5,6 +5,7 @@ import java.awt.*;
 
 public abstract class GameObject implements IClamp{
     protected boolean setShooting = false;
+
     protected float x, y;
     protected float velX, velY;
     private ID id;
@@ -13,6 +14,7 @@ public abstract class GameObject implements IClamp{
     protected boolean jumping = false;
     protected Texture tex = Game.getinstance();
     protected int facing = 1;
+    private Weapon weapon;
 
 
     public boolean isFalling() {
@@ -105,5 +107,13 @@ public abstract class GameObject implements IClamp{
         return var = min;
     else 
         return var;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 }

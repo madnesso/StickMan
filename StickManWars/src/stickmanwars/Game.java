@@ -9,6 +9,7 @@ import java.util.Random;
 public class Game extends Canvas implements Runnable{
 
     public static final int WIDTH = 1920, HEIGHT = 1080;
+    public int speed = 5;
     private Thread thread;
     private boolean running = false;
     private Handler handler;
@@ -16,18 +17,23 @@ public class Game extends Canvas implements Runnable{
     private HUD hud;
     static Texture tex;
     Image background = null;
+    public int ammo = 10;  //da
+    private Weapon weapon;
+
     public Game(){
         handler = new Handler();
         hud = new HUD();
-        this.addKeyListener(new KeyInput(handler));
+        weapon = new Weapon(0, 0, ID.Weapon, handler);
+        this.addKeyListener(new KeyInput(handler, this, this.weapon));
         BufferedImageLoader loader = new BufferedImageLoader();
-        Image map = loader.loadiamge("/pic/maprp.png");
+        BufferedImage map = loader.loadiamge("/pic/maprp.png");
         background = loader.loadiamge("/pic/2386168-_mg_7306.png");
         tex = new Texture();
 
 
         new GameWindow(WIDTH, HEIGHT, "Stick Man Wars", this);
-        loadingthemap((BufferedImage) map);
+        loadingthemap(map);
+        handler.addObject(new Sniper(50, 950, ID.Weapon, this.handler));
         //add objects here, but remember to set the dimension in the class's constructor using setter method
     }
     
@@ -113,7 +119,7 @@ public class Game extends Canvas implements Runnable{
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
                 if (blue == 255 && red == 0 && green == 0)
-                    handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan1, handler));
+                    handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan1, handler, this));
                 else if (red == 255 && blue == 0 && green == 0)
                     handler.addObject(new Terrain(i * 32, j * 32, ID.Terrain));
             }

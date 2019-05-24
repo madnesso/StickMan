@@ -8,9 +8,13 @@ import java.awt.event.KeyEvent;
 public class KeyInput extends KeyAdapter {
     private boolean UP = false, DOWN = false, RIGHT = false, LEFT = false;
     private Handler handler;
+    private Game game; //da
+    private Weapon weapon;
 
-    public KeyInput(Handler handler) {
+    public KeyInput(Handler handler, Game game, Weapon weapon) {
         this.handler = handler;
+        this.game = game;
+        this.weapon = weapon;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -37,9 +41,10 @@ public class KeyInput extends KeyAdapter {
                     tempObject.setVelX(10);
                     LEFT = true;
                 }
-                if (key == KeyEvent.VK_SPACE && !tempObject.setShooting) {
-                    handler.addObject(new Bullets((int) tempObject.getX(), (int) tempObject.getY() + 10, ID.Bullets, tempObject.getFacing() * 5, this.handler));
+                if (key == KeyEvent.VK_SPACE && !tempObject.setShooting && game.ammo != 0) {
+                    handler.addObject(new Bullets((int) tempObject.getX(), (int) tempObject.getY() + 10, ID.Bullets, tempObject.getFacing() * weapon.fireRate, this.handler));
                     tempObject.setShooting = true;
+                    game.ammo--;
                 } else tempObject.setShooting = false;
             }
         }
