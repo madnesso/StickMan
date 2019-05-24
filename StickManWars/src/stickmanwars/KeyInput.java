@@ -18,10 +18,12 @@ public class KeyInput extends KeyAdapter {
         for (int i = 0; i < handler.objects.size(); i++) {
             GameObject tempObject = handler.objects.get(i);
             if (tempObject.getId() == ID.StickMan1) {
-                if (key == KeyEvent.VK_W) {
-                    tempObject.setVelY(-10);
-                    UP = true;
-                    tempObject.setJumping(true);
+                if (key == KeyEvent.VK_W && !tempObject.isJumping()) {
+                    {
+                        tempObject.setVelY(-10);
+                        UP = true;
+                        tempObject.setJumping(true);
+                    }
                 }
                 if (key == KeyEvent.VK_S) {
                     tempObject.setVelY(10);
@@ -47,12 +49,11 @@ public class KeyInput extends KeyAdapter {
             if (tempObject.getId() == ID.StickMan1) {
                 if (key == KeyEvent.VK_W) {
                     UP = false;
-                    tempObject.setFalling(true);
                 }
                 if (key == KeyEvent.VK_S) DOWN = false;
                 if (key == KeyEvent.VK_A) RIGHT = false;
                 if (key == KeyEvent.VK_D) LEFT = false;
-                if (!UP && !DOWN) tempObject.setVelY(0);
+                //if (!UP && !DOWN) tempObject.setVelY(0);
                 if (!RIGHT && !LEFT) tempObject.setVelX(0);
             }
         }

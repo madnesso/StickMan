@@ -4,7 +4,7 @@ package stickmanwars;
 import java.awt.*;
 
 public class StickMan extends GameObject implements ICollide{
-
+    private int Width = 100, Height = 100;
     private Handler handler;
     private float Health;
     private Weapon weapon;
@@ -54,8 +54,17 @@ public class StickMan extends GameObject implements ICollide{
             if(tempObject.getId() == ID.Terrain)
             {
                 if (getBounds().intersects(tempObject.getBounds())) {
-                    x += velX * -1;
                     y += velY * -1;
+                    falling = false;
+                    jumping = false;
+                } else {
+                    falling = true;
+                }
+                if (getBoundsTop().intersects(tempObject.getBounds())) {
+                    y += velY * -1;
+                }
+                if (getBoundsRight().intersects(tempObject.getBounds()) || getBoundsLeft().intersects(tempObject.getBounds())) {
+                    x += velX * -1;
                 }
                 //collision code
             }
@@ -87,15 +96,30 @@ public class StickMan extends GameObject implements ICollide{
         // here stickMan image should be done, remember to animate it
         g.setColor(Color.BLUE);
         g.fillRect((int) x, (int) y, getDimention().width, getDimention().height);
-        g.setColor(Color.cyan);
-        g.drawRect((int) x, (int) y, getBounds().width, getBounds().height);
+        g.setColor(Color.CYAN);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.draw(getBounds());
+        g2d.draw(getBoundsTop());
+        g2d.draw(getBoundsRight());
+        g2d.draw(getBoundsLeft());
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((int) x, (int) y, 100, 100);
+        return new Rectangle((int) x + Width / 4, (int) y + Height / 2, Width / 2, Height / 2);
     }
 
+    public Rectangle getBoundsRight() {
+        return new Rectangle((int) x, (int) y + 10, 10, Height - 20);
+    }
+
+    public Rectangle getBoundsLeft() {
+        return new Rectangle((int) x + Width - 10, (int) y + 10, 10, Height - 20);
+    }
+
+    public Rectangle getBoundsTop() {
+        return new Rectangle((int) x + Width / 4, (int) y, Width / 2, Height / 2);
+    }
     public Weapon getWeapon() {
         return weapon;
     }
