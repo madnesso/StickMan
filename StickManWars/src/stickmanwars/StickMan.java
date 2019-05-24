@@ -11,8 +11,8 @@ public class StickMan extends GameObject implements ICollide{
     private ArmorPack armor;
     private Barricade block;
     private int meleeDamage;
+    private float MaxSpeed = 10;
     private float gravity = 0.5f;
-
     public float getHealth() {
         return Health;
     }
@@ -48,10 +48,15 @@ public class StickMan extends GameObject implements ICollide{
             }
             if(tempObject.getId() == ID.Barricade)
             {
+
                 //collision code
             }
             if(tempObject.getId() == ID.Terrain)
             {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    x += velX * -1;
+                    y += velY * -1;
+                }
                 //collision code
             }
             if(tempObject.getId() == ID.Pack)
@@ -65,13 +70,15 @@ public class StickMan extends GameObject implements ICollide{
     @Override
     public void tick() {
         //here is the movement and collision 
-      setX(getX()+getVelX());
-      setY(getY()+getVelY());
+        x += velX;
+        y += velY;
       setX(clamp(getX(), 0, Game.WIDTH-100));
       setY(clamp(getY(), 0, Game.HEIGHT-120));
       Collision();
         if (jumping || falling) {
             velY += gravity;
+            if (velY > MaxSpeed)
+                velY = MaxSpeed;
         }
     }
 
@@ -79,12 +86,14 @@ public class StickMan extends GameObject implements ICollide{
     public void render(Graphics g) {
         // here stickMan image should be done, remember to animate it
         g.setColor(Color.BLUE);
-        g.fillRect((int) getX(), (int) getY(), getDimention().width, getDimention().height);
+        g.fillRect((int) x, (int) y, getDimention().width, getDimention().height);
+        g.setColor(Color.cyan);
+        g.drawRect((int) x, (int) y, getBounds().width, getBounds().height);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((int) this.getX(), (int) this.getY(), this.getDimention().width, this.getDimention().height);
+        return new Rectangle((int) x, (int) y, 100, 100);
     }
 
     public Weapon getWeapon() {

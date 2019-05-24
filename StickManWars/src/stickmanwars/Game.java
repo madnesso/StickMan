@@ -3,6 +3,7 @@ package stickmanwars;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable{
@@ -18,8 +19,10 @@ public class Game extends Canvas implements Runnable{
         handler = new Handler();
         hud = new HUD();
         this.addKeyListener(new KeyInput(handler));
+        BufferedImageLoader loader = new BufferedImageLoader();
+        BufferedImage map = loader.loadiamge("/pic/maprp.png");
         new GameWindow(WIDTH, HEIGHT, "Stick Man Wars", this);
-        handler.addObject(new StickMan(800, 500, ID.StickMan1, handler));
+        loadingthemap(map);
         //add objects here, but remember to set the dimension in the class's constructor using setter method
     }
     
@@ -93,6 +96,22 @@ public class Game extends Canvas implements Runnable{
         catch(Exception e)
         {
             e.printStackTrace();
+        }
+    }
+
+    private void loadingthemap(BufferedImage image) {
+        int w = image.getWidth(), h = image.getHeight();
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                int pixel = image.getRGB(i, j);
+                int red = (pixel >> 16) & 0xff;
+                int green = (pixel >> 8) & 0xff;
+                int blue = (pixel) & 0xff;
+                if (blue == 255 && red == 0 && green == 0)
+                    handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan1, handler));
+                else if (red == 255 && blue == 0 && green == 0)
+                    handler.addObject(new Terrain(i * 32, j * 32, ID.Terrain));
+            }
         }
     }
 }
