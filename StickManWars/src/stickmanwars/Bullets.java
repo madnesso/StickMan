@@ -2,7 +2,7 @@ package stickmanwars;
 
 import java.awt.*;
 
-public class Bullets extends GameObject {
+public class Bullets extends GameObject implements ICollide {
     Handler handler;
     private Game game;
 

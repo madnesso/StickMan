@@ -34,13 +34,19 @@ public class StickMan extends GameObject implements ICollide{
             GameObject tempObject = handler.objects.get(i);
             if (tempObject.getId() == ID.StickMan1)
             {
-                // collision code 
+
             }
             if(tempObject.getId() == ID.Weapon)
             {
                 if (getBounds().intersects(tempObject.getBounds())) {
-                    game.ammo += 10;
-                    game.setSpeed(10);
+                    if (this.getId().equals(ID.StickMan1)) {
+                        game.ammo += 2;
+                        game.setSpeed(10);
+                    } else if (this.getId().equals(ID.StickMan2)) {
+                        game.ammo2 += 2;
+                        game.setSpeed2(10);
+                    }
+
                     handler.removeObject(tempObject);
                 }
             }

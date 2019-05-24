@@ -4,13 +4,16 @@ package stickmanwars;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable{
 
     public static final int WIDTH = 1920, HEIGHT = 1080;
+    public int ammo2 = 10;
 
     private int speed = 5;
+    private int speed2 = 5;
     private int range = 50;
 
     public Game(){
@@ -19,15 +22,24 @@ public class Game extends Canvas implements Runnable{
         weapon = new Weapon(0, 0, ID.Weapon, handler);
         this.addKeyListener(new KeyInput(handler, this));
         BufferedImageLoader loader = new BufferedImageLoader();
-        BufferedImage map = loader.loadiamge("/pic/maprp.png");
+        ArrayList<BufferedImage> maps = new ArrayList<BufferedImage>(5);
+        for (int i = 0; i < 5; i++) {
+            BufferedImage map = loader.loadiamge("/pic/maps/maprp" + i + ".png");
+            maps.add(map);
+        }
+        Random r = new Random();
         background = loader.loadiamge("/pic/2386168-_mg_7306.png");
         tex = new Texture();
 
 
         new GameWindow(WIDTH, HEIGHT, "Stick Man Wars", this);
-        loadingthemap(map);
-        handler.addObject(new Sniper(50, 950, ID.Weapon, this.handler));
+        loadingthemap(maps.get(r.nextInt(4)));
+        //handler.addObject(new Sniper(50, 950, ID.Weapon, this.handler));
         //add objects here, but remember to set the dimension in the class's constructor using setter method
+    }
+
+    public int getSpeed2() {
+        return speed2;
     }
 
     public int getSpeed() {
@@ -129,6 +141,13 @@ public class Game extends Canvas implements Runnable{
         }
     }
 
+    public void setSpeed2(int i) {
+    }
+
+    public static Texture getinstance() {
+        return tex;
+    }
+
     private void loadingthemap(BufferedImage image) {
         int w = image.getWidth(), h = image.getHeight();
         for (int i = 0; i < w; i++) {
@@ -141,11 +160,9 @@ public class Game extends Canvas implements Runnable{
                     handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan1, handler, this));
                 else if (red == 255 && blue == 0 && green == 0)
                     handler.addObject(new Terrain(i * 32, j * 32, ID.Terrain));
+                else if (red == 0 && blue == 0 && green == 255)
+                    handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan2, handler, this));
             }
         }
-    }
-
-    public static Texture getinstance() {
-        return tex;
     }
 }
