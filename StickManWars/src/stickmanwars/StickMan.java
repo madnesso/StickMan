@@ -72,7 +72,7 @@ public class StickMan extends GameObject implements ICollide{
             {
                 //collision code
             }
-            
+
         }
     }
     
@@ -81,6 +81,8 @@ public class StickMan extends GameObject implements ICollide{
         //here is the movement and collision 
         x += velX;
         y += velY;
+        if (velX < 0) facing = -1;
+        else if (velX > 0) facing = 1;
       setX(clamp(getX(), 0, Game.WIDTH-100));
       setY(clamp(getY(), 0, Game.HEIGHT-120));
       Collision();

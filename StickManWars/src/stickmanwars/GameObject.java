@@ -4,6 +4,7 @@ package stickmanwars;
 import java.awt.*;
 
 public abstract class GameObject implements IClamp{
+    protected boolean setShooting = false;
     protected float x, y;
     protected float velX, velY;
     private ID id;
@@ -11,6 +12,9 @@ public abstract class GameObject implements IClamp{
     protected boolean falling = true;
     protected boolean jumping = false;
     protected Texture tex = Game.getinstance();
+    protected int facing = 1;
+
+
     public boolean isFalling() {
         return falling;
     }
@@ -79,7 +83,15 @@ public abstract class GameObject implements IClamp{
     public void setId(ID id) {
         this.id = id;
     }
-    
+
+    public int getFacing() {
+        return facing;
+    }
+
+    public void setFacing(int facing) {
+        this.facing = facing;
+    }
+
     public abstract void tick();
     
     public abstract void render(Graphics g);

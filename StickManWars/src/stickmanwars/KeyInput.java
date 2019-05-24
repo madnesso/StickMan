@@ -37,6 +37,10 @@ public class KeyInput extends KeyAdapter {
                     tempObject.setVelX(10);
                     LEFT = true;
                 }
+                if (key == KeyEvent.VK_SPACE && !tempObject.setShooting) {
+                    handler.addObject(new Bullets((int) tempObject.getX(), (int) tempObject.getY() + 10, ID.Bullets, tempObject.getFacing() * 5, this.handler));
+                    tempObject.setShooting = true;
+                } else tempObject.setShooting = false;
             }
         }
     }
