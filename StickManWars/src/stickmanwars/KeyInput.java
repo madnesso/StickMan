@@ -40,7 +40,7 @@ public class KeyInput extends KeyAdapter {
                     LEFT = true;
                 }
                 if (key == KeyEvent.VK_SPACE && !tempObject.setShooting && game.ammo != 0) {
-                    handler.addObject(new Bullets((int) tempObject.getX(), (int) tempObject.getY() + 10, ID.Bullets, tempObject.getFacing() * game.getSpeed(), this.handler, game));
+                    handler.addObject(new Bullets((int) tempObject.getX() + (tempObject.getFacing() * 50), (int) tempObject.getY() + 10, ID.Bullets, tempObject.getFacing() * game.getSpeed(), this.handler, game));
                     tempObject.setShooting = true;
                     game.ammo--;
                 } else tempObject.setShooting = false;
@@ -66,7 +66,7 @@ public class KeyInput extends KeyAdapter {
                     RIGHT = true;
                 }
                 if (key == KeyEvent.VK_CONTROL && !tempObject.setShooting && game.ammo2 != 0) {
-                    handler.addObject(new Bullets((int) tempObject.getX(), (int) tempObject.getY() + 10, ID.Bullets, tempObject.getFacing() * game.getSpeed2(), this.handler, game));
+                    handler.addObject(new Bullets((int) tempObject.getX() + (tempObject.getFacing() * 50), (int) tempObject.getY() + 10, ID.Bullets, tempObject.getFacing() * game.getSpeed2(), this.handler, game));
                     tempObject.setShooting = true;
                     game.ammo2--;
                 } else tempObject.setShooting = false;

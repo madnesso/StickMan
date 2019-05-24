@@ -14,7 +14,7 @@ public class Game extends Canvas implements Runnable{
 
     private int speed = 5;
     private int speed2 = 5;
-    private int range = 50;
+    private int range = 100;
 
     public Game(){
         handler = new Handler();
@@ -116,7 +116,7 @@ public class Game extends Canvas implements Runnable{
         g.setColor(Color.WHITE);
         g.drawImage(background, 0, 0, 1920, 1080, this);
         handler.render(g);
-        hud.render(g);
+        hud.render(g, this);
 
         //////////////////////////////
         g.dispose();
@@ -156,12 +156,15 @@ public class Game extends Canvas implements Runnable{
                 int red = (pixel >> 16) & 0xff;
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
-                if (blue == 255 && red == 0 && green == 0)
+                if (blue == 255 && red == 0 && green == 0) {
+                    handler.addObject(new Castle(i * 32, j * 32, ID.Castle, this.handler));
                     handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan1, handler, this));
-                else if (red == 255 && blue == 0 && green == 0)
+                } else if (red == 255 && blue == 0 && green == 0)
                     handler.addObject(new Terrain(i * 32, j * 32, ID.Terrain));
-                else if (red == 0 && blue == 0 && green == 255)
+                else if (red == 0 && blue == 0 && green == 255) {
                     handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan2, handler, this));
+                    handler.addObject(new Castle(i * 32, j * 32, ID.Castle2, this.handler));
+                }
             }
         }
     }

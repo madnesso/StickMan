@@ -2,7 +2,7 @@ package stickmanwars;
 
 import java.awt.*;
 
-public class Bullets extends GameObject implements ICollide {
+public class Bullets extends GameObject implements ICollide, IClamp {
     Handler handler;
     private Game game;
 
@@ -34,13 +34,14 @@ public class Bullets extends GameObject implements ICollide {
 
     @Override
     public void tick() {
+
         if (game.getRange() != 0) {
             x += velX;
             Collision();
             game.setRange(game.getRange() - 1);
         } else {
             handler.removeObject(this);
-            game.setRange(50);
+            game.setRange(100);
         }
     }
 

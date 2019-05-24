@@ -6,8 +6,7 @@ import java.awt.*;
 public class StickMan extends GameObject implements ICollide{
     private int Width = 50, Height = 150 / 2;
     private Handler handler;
-    private float Health;
-    private ArmorPack armor;
+    private int Health = 100;
     private Barricade block;
     private int meleeDamage;
     private float MaxSpeed = 10;
@@ -39,10 +38,10 @@ public class StickMan extends GameObject implements ICollide{
             if(tempObject.getId() == ID.Weapon)
             {
                 if (getBounds().intersects(tempObject.getBounds())) {
-                    if (this.getId().equals(ID.StickMan1)) {
+                    if (getId().equals(ID.StickMan1)) {
                         game.ammo += 2;
                         game.setSpeed(10);
-                    } else if (this.getId().equals(ID.StickMan2)) {
+                    } else if (getId().equals(ID.StickMan2)) {
                         game.ammo2 += 2;
                         game.setSpeed2(10);
                     }
@@ -52,8 +51,16 @@ public class StickMan extends GameObject implements ICollide{
             }
             if(tempObject.getId() == ID.Barricade)
             {
-
-                //collision code
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    y += velY * -1;
+                    falling = false;
+                    jumping = false;
+                } else {
+                    falling = true;
+                }
+                if (getBoundsRight().intersects(tempObject.getBounds()) || getBoundsLeft().intersects(tempObject.getBounds())) {
+                    x += velX * -1;
+                }
             }
             if(tempObject.getId() == ID.Terrain)
             {
@@ -70,11 +77,47 @@ public class StickMan extends GameObject implements ICollide{
                 if (getBoundsRight().intersects(tempObject.getBounds()) || getBoundsLeft().intersects(tempObject.getBounds())) {
                     x += velX * -1;
                 }
-                //collision code
             }
-            if(tempObject.getId() == ID.Pack)
-            {
-                //collision code
+            if (tempObject.getId() == ID.HealthPack) {
+                if (getId() == ID.StickMan1) {
+                    if (HUD.getHealth() <= 50)
+                        HUD.setHealth(HUD.getHealth() + 50);
+                    else
+                        HUD.setHealth(100);
+                }
+                if (getId() == ID.StickMan2) {
+                    if (HUD.getHealth2() <= 50)
+                        HUD.setHealth2(HUD.getHealth2() + 50);
+                    else
+                        HUD.setHealth2(100);
+                }
+            }
+            if (tempObject.getId() == ID.ArmorPack) {
+                if (getId() == ID.StickMan1) {
+                    if (HUD.getHealth3() <= 400)
+                        HUD.setHealth3(HUD.getHealth3() + 100);
+                    else
+                        HUD.setHealth3(500);
+                }
+                if (getId() == ID.StickMan2) {
+                    if (HUD.getHealth4() <= 400)
+                        HUD.setHealth4(HUD.getHealth4() + 100);
+                    else
+                        HUD.setHealth4(500);
+                }
+            }
+            if (tempObject.getId() == ID.Bullets) {
+                if (getBoundsTop().intersects(tempObject.getBounds())) {
+                    if (getId() == ID.StickMan1) {
+                        if (HUD.getHealth() > 0)
+                            HUD.setHealth(HUD.getHealth() - 50);
+                    }
+                    if (getId() == ID.StickMan2) {
+                        if (HUD.getHealth2() > 0)
+                            HUD.setHealth2(HUD.getHealth2() - 50);
+                    }
+                    handler.removeObject(tempObject);
+                }
             }
 
         }
@@ -87,20 +130,37 @@ public class StickMan extends GameObject implements ICollide{
         y += velY;
         if (velX < 0) facing = -1;
         else if (velX > 0) facing = 1;
-      setX(clamp(getX(), 0, Game.WIDTH-100));
-      setY(clamp(getY(), 0, Game.HEIGHT-120));
-      Collision();
+        setX(clamp(getX(), 0, Game.WIDTH - 100));
+        setY(clamp(getY(), 0, Game.HEIGHT - 120));
+        Collision();
         if (jumping || falling) {
             velY += gravity;
             if (velY > MaxSpeed)
                 velY = MaxSpeed;
+        }
+        if (HUD.getHealth() == 0) {
+            for (int i = 0; i < handler.objects.size(); i++) {
+                GameObject tempObject = handler.objects.get(i);
+                if (tempObject.getId() == ID.StickMan1)
+                    handler.removeObject(tempObject);
+            }
+        }
+        if (HUD.getHealth2() == 0) {
+            for (int i = 0; i < handler.objects.size(); i++) {
+                GameObject tempObject = handler.objects.get(i);
+                if (tempObject.getId() == ID.StickMan2)
+                    handler.removeObject(tempObject);
+            }
         }
     }
 
     @Override
     public void render(Graphics g) {
         // here stickMan image should be done, remember to animate it
-        g.drawImage(tex.images[1], (int) x, (int) y, Width, Height, null);
+        if (this.facing == 1)
+            g.drawImage(tex.images[1], (int) x, (int) y, Width, Height, null);
+        else
+            g.drawImage(tex.images[3], (int) x, (int) y, Width, Height, null);
         g.setColor(Color.CYAN);
         Graphics2D g2d = (Graphics2D) g;
         g2d.draw(getBounds());
