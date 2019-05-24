@@ -4,11 +4,13 @@ import java.awt.*;
 
 public class Bullets extends GameObject {
     Handler handler;
+    private Game game;
 
-    public Bullets(int x, int y, ID id, int velX, Handler handler) {
+    public Bullets(int x, int y, ID id, int velX, Handler handler, Game game) {
         super(x, y, id);
         this.velX = velX;
         this.handler = handler;
+        this.game = game;
     }
 
     public void Collision() {
@@ -32,8 +34,14 @@ public class Bullets extends GameObject {
 
     @Override
     public void tick() {
-        x += velX;
-        Collision();
+        if (game.getRange() != 0) {
+            x += velX;
+            Collision();
+            game.setRange(game.getRange() - 1);
+        } else {
+            handler.removeObject(this);
+            game.setRange(50);
+        }
     }
 
     @Override

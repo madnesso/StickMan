@@ -40,7 +40,7 @@ public class StickMan extends GameObject implements ICollide{
             {
                 if (getBounds().intersects(tempObject.getBounds())) {
                     game.ammo += 10;
-                    game.speed = 10;
+                    game.setSpeed(10);
                     handler.removeObject(tempObject);
                 }
             }

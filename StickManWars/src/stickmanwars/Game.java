@@ -9,22 +9,15 @@ import java.util.Random;
 public class Game extends Canvas implements Runnable{
 
     public static final int WIDTH = 1920, HEIGHT = 1080;
-    public int speed = 5;
-    private Thread thread;
-    private boolean running = false;
-    private Handler handler;
-    private Random rand;
-    private HUD hud;
-    static Texture tex;
-    Image background = null;
-    public int ammo = 10;  //da
-    private Weapon weapon;
+
+    private int speed = 5;
+    private int range = 50;
 
     public Game(){
         handler = new Handler();
         hud = new HUD();
         weapon = new Weapon(0, 0, ID.Weapon, handler);
-        this.addKeyListener(new KeyInput(handler, this, this.weapon));
+        this.addKeyListener(new KeyInput(handler, this));
         BufferedImageLoader loader = new BufferedImageLoader();
         BufferedImage map = loader.loadiamge("/pic/maprp.png");
         background = loader.loadiamge("/pic/2386168-_mg_7306.png");
@@ -35,6 +28,32 @@ public class Game extends Canvas implements Runnable{
         loadingthemap(map);
         handler.addObject(new Sniper(50, 950, ID.Weapon, this.handler));
         //add objects here, but remember to set the dimension in the class's constructor using setter method
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    private Thread thread;
+    private boolean running = false;
+    private Handler handler;
+    private Random rand;
+    private HUD hud;
+    static Texture tex;
+    Image background = null;
+    public int ammo = 10;  //da
+    private Weapon weapon;
+
+    public void setRange(int range) {
+        this.range = range;
     }
     
     @Override
