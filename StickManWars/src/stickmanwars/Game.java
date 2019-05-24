@@ -15,13 +15,16 @@ public class Game extends Canvas implements Runnable{
     private Random rand;
     private HUD hud;
     static Texture tex;
+    Image background = null;
     public Game(){
         handler = new Handler();
         hud = new HUD();
         this.addKeyListener(new KeyInput(handler));
         BufferedImageLoader loader = new BufferedImageLoader();
         Image map = loader.loadiamge("/pic/maprp.png");
+        background = loader.loadiamge("/pic/2386168-_mg_7306.png");
         tex = new Texture();
+
 
         new GameWindow(WIDTH, HEIGHT, "Stick Man Wars", this);
         loadingthemap((BufferedImage) map);
@@ -74,7 +77,7 @@ public class Game extends Canvas implements Runnable{
         Graphics g = bs.getDrawGraphics();
         ///////////////////////////////
         g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 1920, 1080);
+        g.drawImage(background, 0, 0, 1920, 1080, this);
         handler.render(g);
         hud.render(g);
 

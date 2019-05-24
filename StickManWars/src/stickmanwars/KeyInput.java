@@ -20,7 +20,7 @@ public class KeyInput extends KeyAdapter {
             if (tempObject.getId() == ID.StickMan1) {
                 if (key == KeyEvent.VK_W && !tempObject.isJumping()) {
                     {
-                        tempObject.setVelY(-20);
+                        tempObject.setVelY(-15);
                         UP = true;
                         tempObject.setJumping(true);
                     }

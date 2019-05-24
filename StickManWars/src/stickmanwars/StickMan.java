@@ -4,7 +4,7 @@ package stickmanwars;
 import java.awt.*;
 
 public class StickMan extends GameObject implements ICollide{
-    private int Width = 100, Height = 100;
+    private int Width = 50, Height = 150 / 2;
     private Handler handler;
     private float Health;
     private Weapon weapon;
@@ -94,8 +94,7 @@ public class StickMan extends GameObject implements ICollide{
     @Override
     public void render(Graphics g) {
         // here stickMan image should be done, remember to animate it
-        g.setColor(Color.BLUE);
-        g.fillRect((int) x, (int) y, getDimention().width, getDimention().height);
+        g.drawImage(tex.images[1], (int) x, (int) y, Width, Height, null);
         g.setColor(Color.CYAN);
         Graphics2D g2d = (Graphics2D) g;
         g2d.draw(getBounds());
