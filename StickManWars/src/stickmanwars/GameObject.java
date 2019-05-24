@@ -10,7 +10,7 @@ public abstract class GameObject implements IClamp{
     private Dimension dimention;
     protected boolean falling = true;
     protected boolean jumping = false;
-
+    protected Texture tex = Game.getinstance();
     public boolean isFalling() {
         return falling;
     }

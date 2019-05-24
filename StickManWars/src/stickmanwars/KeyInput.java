@@ -20,7 +20,7 @@ public class KeyInput extends KeyAdapter {
             if (tempObject.getId() == ID.StickMan1) {
                 if (key == KeyEvent.VK_W && !tempObject.isJumping()) {
                     {
-                        tempObject.setVelY(-10);
+                        tempObject.setVelY(-20);
                         UP = true;
                         tempObject.setJumping(true);
                     }
@@ -43,7 +43,6 @@ public class KeyInput extends KeyAdapter {
 
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        //code example for keyEvent
         for (int i = 0; i < handler.objects.size(); i++) {
             GameObject tempObject = handler.objects.get(i);
             if (tempObject.getId() == ID.StickMan1) {

@@ -14,15 +14,17 @@ public class Game extends Canvas implements Runnable{
     private Handler handler;
     private Random rand;
     private HUD hud;
-    
+    static Texture tex;
     public Game(){
         handler = new Handler();
         hud = new HUD();
         this.addKeyListener(new KeyInput(handler));
         BufferedImageLoader loader = new BufferedImageLoader();
-        BufferedImage map = loader.loadiamge("/pic/maprp.png");
+        Image map = loader.loadiamge("/pic/maprp.png");
+        tex = new Texture();
+
         new GameWindow(WIDTH, HEIGHT, "Stick Man Wars", this);
-        loadingthemap(map);
+        loadingthemap((BufferedImage) map);
         //add objects here, but remember to set the dimension in the class's constructor using setter method
     }
     
@@ -113,5 +115,9 @@ public class Game extends Canvas implements Runnable{
                     handler.addObject(new Terrain(i * 32, j * 32, ID.Terrain));
             }
         }
+    }
+
+    public static Texture getinstance() {
+        return tex;
     }
 }
