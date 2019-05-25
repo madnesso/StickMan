@@ -6,15 +6,13 @@ import java.awt.*;
 public class StickMan extends GameObject implements ICollide{
     private int Width = 50, Height = 150 / 2;
     private Handler handler;
-    private int Health = 100;
     private Barricade block;
-    private int meleeDamage;
+    //private int meleeDamage;
     private float MaxSpeed = 10;
     private float gravity = 0.5f;
     private Game game;
     private boolean player2isdead = false;
     private boolean player1isdead;
-    private float[] temptime = new float[2];
 
     public StickMan(int x, int y, ID id, Handler handler, Game game) {
         super(x, y, id);
@@ -51,6 +49,7 @@ public class StickMan extends GameObject implements ICollide{
 
                     handler.removeObject(tempObject);
                     game.numberofweps--;
+                    AudioPlayer.getSoundMap("pickup").play();
                 }
             }
             if(tempObject.getId() == ID.Barricade)
@@ -95,6 +94,8 @@ public class StickMan extends GameObject implements ICollide{
                     else
                         HUD.setHealth2(100);
                 }
+                AudioPlayer.getSoundMap("pickup").play();
+                handler.removeObject(this);
             }
             if (tempObject.getId() == ID.ArmorPack) {
                 if (getId() == ID.StickMan1) {
@@ -109,6 +110,8 @@ public class StickMan extends GameObject implements ICollide{
                     else
                         HUD.setHealth4(500);
                 }
+                AudioPlayer.getSoundMap("pickup").play();
+                handler.removeObject(this);
             }
             if (tempObject.getId() == ID.Bullets) {
                 if (getBoundsTop().intersects(tempObject.getBounds())) {
@@ -147,8 +150,8 @@ public class StickMan extends GameObject implements ICollide{
                 GameObject tempObject = handler.objects.get(i);
                 if (tempObject.getId() == ID.StickMan1) {
                     handler.removeObject(tempObject);
-                    temptime[0] = game.getTimer();
                     player1isdead = true;
+                    AudioPlayer.getSoundMap("dead").play();
 
                 }
             }
@@ -159,7 +162,7 @@ public class StickMan extends GameObject implements ICollide{
                 if (tempObject.getId() == ID.StickMan2) {
                     handler.removeObject(tempObject);
                     player2isdead = true;
-                    temptime[1] = game.getTimer();
+                    AudioPlayer.getSoundMap("dead").play();
 
                 }
             }

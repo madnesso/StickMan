@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable{
-
+    public boolean[] isshooting = new boolean[2];
     static final int WIDTH = 1920, HEIGHT = 1080;
     public int ammo2 = 0;
     public int ammo = 0;
@@ -64,6 +64,7 @@ public class Game extends Canvas implements Runnable{
 
         new GameWindow(WIDTH, HEIGHT, "Stick Man Wars", this);
         loadingthemap(maps.get(r.nextInt(4)));
+        //AudioPlayer.getMusicMap("background").loop();
         //handler.addObject(new Sniper(50, 950, ID.Weapon, this.handler));
         //add objects here, but remember to set the dimension in the class's constructor using setter method
     }
@@ -118,6 +119,9 @@ public class Game extends Canvas implements Runnable{
         if (numberofweps == 0) {
             respawnweps(maps.get(r.nextInt(4)));
             numberofweps = 4;
+        }
+        if (isshooting[0] || isshooting[1]) {
+            AudioPlayer.getSoundMap("shoot").play();
         }
     }
 

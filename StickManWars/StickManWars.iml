@@ -13,5 +13,6 @@
     <orderEntry type="library" name="jorbis-0.0.15" level="application" />
     <orderEntry type="library" name="lwjgl" level="application" />
     <orderEntry type="library" name="slick" level="application" />
+    <orderEntry type="library" name="lwjgl_util-2.9.0" level="application" />
   </component>
 </module>
