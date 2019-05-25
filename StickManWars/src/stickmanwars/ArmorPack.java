@@ -3,8 +3,7 @@ package stickmanwars;
 import java.awt.*;
 
 public final class ArmorPack extends GameObject{
-    
-    private int ArmorCharge;
+
     private Handler handler;
 
     public ArmorPack(int x, int y, ID id, Handler handler) {
@@ -14,25 +13,19 @@ public final class ArmorPack extends GameObject{
 
     @Override
     public void tick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        g.drawImage(tex.images[6], (int) x, (int) y, 96, 96, null);
+        g.setColor(Color.cyan);
+        g.drawRect((int) x, (int) y + 20, getBounds().width, getBounds().height);
     }
-
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((int) this.getX(), (int) this.getY(), this.getDimention().width, this.getDimention().height);
+        return new Rectangle((int) this.getX(), (int) this.getY() + 20, 128, 64);
     }
 
-    public int getArmorCharge() {
-        return ArmorCharge;
-    }
-
-    public void setArmorCharge(int ArmorCharge) {
-        this.ArmorCharge = ArmorCharge;
-    }
     
 }

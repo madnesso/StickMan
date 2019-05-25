@@ -82,39 +82,45 @@ public class StickMan extends GameObject implements ICollide{
                 }
             }
             if (tempObject.getId() == ID.HealthPack) {
-                if (getId() == ID.StickMan1) {
-                    if (HUD.getHealth() <= 50)
-                        HUD.setHealth(HUD.getHealth() + 50);
-                    else
-                        HUD.setHealth(100);
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    if (getId() == ID.StickMan1) {
+                        if (HUD.getHealth() <= 50)
+                            HUD.setHealth(HUD.getHealth() + 50);
+                        else
+                            HUD.setHealth(100);
+                    }
+                    if (getId() == ID.StickMan2) {
+                        if (HUD.getHealth2() <= 50)
+                            HUD.setHealth2(HUD.getHealth2() + 50);
+                        else
+                            HUD.setHealth2(100);
+                    }
+                    AudioPlayer.getSoundMap("pickup").play();
+                    handler.removeObject(tempObject);
+                    game.healthpackumber--;
                 }
-                if (getId() == ID.StickMan2) {
-                    if (HUD.getHealth2() <= 50)
-                        HUD.setHealth2(HUD.getHealth2() + 50);
-                    else
-                        HUD.setHealth2(100);
-                }
-                AudioPlayer.getSoundMap("pickup").play();
-                handler.removeObject(this);
             }
             if (tempObject.getId() == ID.ArmorPack) {
-                if (getId() == ID.StickMan1) {
-                    if (HUD.getHealth3() <= 400)
-                        HUD.setHealth3(HUD.getHealth3() + 100);
-                    else
-                        HUD.setHealth3(500);
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    if (getId() == ID.StickMan1) {
+                        if (HUD.getHealth3() <= 400)
+                            HUD.setHealth3(HUD.getHealth3() + 100);
+                        else
+                            HUD.setHealth3(500);
+                    }
+                    if (getId() == ID.StickMan2) {
+                        if (HUD.getHealth4() <= 400)
+                            HUD.setHealth4(HUD.getHealth4() + 100);
+                        else
+                            HUD.setHealth4(500);
+                    }
+                    handler.removeObject(tempObject);
+                    AudioPlayer.getSoundMap("pickup").play();
+                    game.armorpacknumber--;
                 }
-                if (getId() == ID.StickMan2) {
-                    if (HUD.getHealth4() <= 400)
-                        HUD.setHealth4(HUD.getHealth4() + 100);
-                    else
-                        HUD.setHealth4(500);
-                }
-                AudioPlayer.getSoundMap("pickup").play();
-                handler.removeObject(this);
             }
             if (tempObject.getId() == ID.Bullets) {
-                if (getBoundsTop().intersects(tempObject.getBounds())) {
+                if (getBoundsTop().intersects(tempObject.getBounds()) || getBounds().intersects(tempObject.getBounds())) {
                     if (getId() == ID.StickMan1) {
                         if (HUD.getHealth() > 0)
                             HUD.setHealth(HUD.getHealth() - 50);

@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Texture {
 
-    public BufferedImage[] images = new BufferedImage[6];
+    public BufferedImage[] images = new BufferedImage[8];
     Spritesheet bs, ps;
     BufferedImage blocksheet = null;
     BufferedImage playersheet = null;
@@ -26,5 +26,7 @@ public class Texture {
         images[3] = loader.loadiamge("/pic/Layer 2.png");
         images[4] = loader.loadiamge("/pic/dirty.png");
         images[5] = loader.loadiamge("/pic/dirty2.png");
+        images[6] = loader.loadiamge("/pic/RepairPackk.png");
+        images[7] = loader.loadiamge("/pic/HealthPacket.png");
     }
 }
