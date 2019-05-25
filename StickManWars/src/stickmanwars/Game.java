@@ -48,6 +48,7 @@ public class Game extends Canvas implements Runnable{
     static Texture tex;
 
     public Game() {
+        AudioPlayer.load();
         handler = new Handler();
         hud = new HUD();
         weapon = new Weapon(0, 0, ID.Weapon, handler);
