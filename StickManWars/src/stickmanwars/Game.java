@@ -11,10 +11,11 @@ public class Game extends Canvas implements Runnable{
 
     public static final int WIDTH = 1920, HEIGHT = 1080;
     public int ammo2 = 10;
-
     private int speed = 5;
     private int speed2 = 5;
     private int range = 100;
+    float timer = 0;
+    private int[] respawnpoint = new int[4];
 
     public Game(){
         handler = new Handler();
@@ -64,6 +65,14 @@ public class Game extends Canvas implements Runnable{
     public int ammo = 10;  //da
     private Weapon weapon;
 
+    public int getRespawnpoint(int i) {
+        return respawnpoint[i];
+    }
+
+    public float getTimer() {
+        return timer;
+    }
+
     public void setRange(int range) {
         this.range = range;
     }
@@ -102,6 +111,7 @@ public class Game extends Canvas implements Runnable{
     private void tick(){
         handler.tick();
         hud.tick();
+        timer++;
     }
     
     private void render(){
@@ -158,12 +168,17 @@ public class Game extends Canvas implements Runnable{
                 int blue = (pixel) & 0xff;
                 if (blue == 255 && red == 0 && green == 0) {
                     handler.addObject(new Castle(i * 32, j * 32, ID.Castle, this.handler));
+                    respawnpoint[0] = i * 32;
+                    respawnpoint[1] = j * 32;
                     handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan1, handler, this));
                 } else if (red == 255 && blue == 0 && green == 0)
                     handler.addObject(new Terrain(i * 32, j * 32, ID.Terrain));
                 else if (red == 0 && blue == 0 && green == 255) {
-                    handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan2, handler, this));
                     handler.addObject(new Castle(i * 32, j * 32, ID.Castle2, this.handler));
+                    respawnpoint[2] = i * 32;
+                    respawnpoint[3] = j * 32;
+                    handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan2, handler, this));
+
                 }
             }
         }

@@ -2,7 +2,7 @@ package stickmanwars;
 
 import java.awt.*;
 
-public final class Castle extends GameObject{
+public final class Castle extends GameObject {
 
     private int castleHealth = HUD.getHealth();
     private Handler handler;
@@ -35,7 +35,7 @@ public final class Castle extends GameObject{
         if (getId().equals(ID.Castle))
             g.drawImage(tex.images[4], (int) x, (int) y, 96, 128, null);
         else
-            g.drawImage(tex.images[5], (int) x + 20, (int) y, 96, 128, null);
+            g.drawImage(tex.images[5], (int) x - 20, (int) y, 96, 128, null);
         g.setColor(Color.CYAN);
         Graphics2D g2d = (Graphics2D) g;
         g2d.draw(getBounds());
@@ -44,8 +44,9 @@ public final class Castle extends GameObject{
     @Override
     public Rectangle getBounds() {
         if (getId().equals(ID.Castle2))
-            return new Rectangle((int) this.getX() + 58, (int) this.getY(), 55, 128);
-        else return new Rectangle((int) this.getX(), (int) this.getY(), 55, 128);
+            return new Rectangle((int) this.getX() + 20, (int) this.getY(), 55, 128);
+        else
+            return new Rectangle((int) this.getX(), (int) this.getY(), 55, 128);
     }
 
     public int getCastleHealth() {
@@ -56,6 +57,5 @@ public final class Castle extends GameObject{
         this.castleHealth = castleHealth;
     }
 
-    
-    
+
 }

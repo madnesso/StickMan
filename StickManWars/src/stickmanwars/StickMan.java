@@ -12,6 +12,9 @@ public class StickMan extends GameObject implements ICollide{
     private float MaxSpeed = 10;
     private float gravity = 0.5f;
     private Game game;
+    private boolean player2isdead = false;
+    private boolean player1isdead;
+    private float[] temptime = new float[2];
 
     public StickMan(int x, int y, ID id, Handler handler, Game game) {
         super(x, y, id);
@@ -141,22 +144,37 @@ public class StickMan extends GameObject implements ICollide{
         if (HUD.getHealth() == 0) {
             for (int i = 0; i < handler.objects.size(); i++) {
                 GameObject tempObject = handler.objects.get(i);
-                if (tempObject.getId() == ID.StickMan1)
+                if (tempObject.getId() == ID.StickMan1) {
                     handler.removeObject(tempObject);
+                    temptime[0] = game.getTimer();
+                    player1isdead = true;
+
+                }
             }
         }
         if (HUD.getHealth2() == 0) {
             for (int i = 0; i < handler.objects.size(); i++) {
                 GameObject tempObject = handler.objects.get(i);
-                if (tempObject.getId() == ID.StickMan2)
+                if (tempObject.getId() == ID.StickMan2) {
                     handler.removeObject(tempObject);
+                    player2isdead = true;
+                    temptime[1] = game.getTimer();
+
+                }
             }
+        }
+        if (player1isdead) {
+            respawn(ID.StickMan1, 0, 1);
+            player1isdead = false;
+        }
+        if (player2isdead) {
+            respawn(ID.StickMan2, 2, 3);
+            player2isdead = false;
         }
     }
 
     @Override
     public void render(Graphics g) {
-        // here stickMan image should be done, remember to animate it
         if (this.facing == 1)
             g.drawImage(tex.images[1], (int) x, (int) y, Width, Height, null);
         else
@@ -169,6 +187,15 @@ public class StickMan extends GameObject implements ICollide{
         g2d.draw(getBoundsLeft());
     }
 
+    public void respawn(ID test, int x, int y) {
+        if (test == ID.StickMan1) {
+            handler.addObject(new StickMan(game.getRespawnpoint(x), game.getRespawnpoint(y), test, handler, game));
+            HUD.setHealth(100);
+        } else {
+            handler.addObject(new StickMan(game.getRespawnpoint(x), game.getRespawnpoint(y), test, handler, game));
+            HUD.setHealth2(100);
+        }
+    }
     @Override
     public Rectangle getBounds() {
         return new Rectangle((int) x + Width / 4, (int) y + Height / 2, Width / 2, Height / 2);

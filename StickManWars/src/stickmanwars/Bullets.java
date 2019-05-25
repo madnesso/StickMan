@@ -15,7 +15,7 @@ public class Bullets extends GameObject implements ICollide, IClamp {
 
     public void Collision() {
         for (int i = 0; i < handler.objects.size(); i++) {
-            // this code could be used at any class by the same way, just implement ICollide
+
             GameObject tempObject = handler.objects.get(i);
             if (tempObject.getId() == ID.StickMan1) {
                 // collision code
@@ -27,6 +27,18 @@ public class Bullets extends GameObject implements ICollide, IClamp {
             if (tempObject.getId() == ID.Terrain) {
                 if (getBounds().intersects(tempObject.getBounds())) {
                     handler.removeObject(this);
+                }
+            }
+            if (tempObject.getId() == ID.Castle) {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    handler.removeObject(this);
+                    HUD.setHealth3(HUD.getHealth3() - 10);
+                }
+            }
+            if (tempObject.getId() == ID.Castle2) {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    handler.removeObject(this);
+                    HUD.setHealth4(HUD.getHealth4() - 10);
                 }
             }
         }
