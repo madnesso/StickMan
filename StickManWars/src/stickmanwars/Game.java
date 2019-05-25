@@ -41,6 +41,7 @@ public class Game extends Canvas implements Runnable{
 
     private Thread thread;
     private boolean running = false;
+
     private Handler handler;
     private Random rand;
     private HUD hud;
