@@ -42,14 +42,15 @@ public class StickMan extends GameObject implements ICollide{
             {
                 if (getBounds().intersects(tempObject.getBounds())) {
                     if (getId().equals(ID.StickMan1)) {
-                        game.ammo += 2;
-                        game.setSpeed(10);
+                        game.ammo += 10;
+                        game.setSpeed(50);
                     } else if (getId().equals(ID.StickMan2)) {
-                        game.ammo2 += 2;
-                        game.setSpeed2(10);
+                        game.ammo2 += 10;
+                        game.setSpeed2(50);
                     }
 
                     handler.removeObject(tempObject);
+                    game.numberofweps--;
                 }
             }
             if(tempObject.getId() == ID.Barricade)

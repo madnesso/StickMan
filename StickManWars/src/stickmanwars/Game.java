@@ -9,35 +9,19 @@ import java.util.Random;
 
 public class Game extends Canvas implements Runnable{
 
-    public static final int WIDTH = 1920, HEIGHT = 1080;
-    public int ammo2 = 10;
+    static final int WIDTH = 1920, HEIGHT = 1080;
+    public int ammo2 = 0;
+    public int ammo = 0;
+    public int numberofweps = 4;
     private int speed = 5;
     private int speed2 = 5;
     private int range = 100;
     float timer = 0;
+    BufferedImageLoader loader = new BufferedImageLoader();
+    ArrayList<BufferedImage> maps = new ArrayList<BufferedImage>(5);
     private int[] respawnpoint = new int[4];
-
-    public Game(){
-        handler = new Handler();
-        hud = new HUD();
-        weapon = new Weapon(0, 0, ID.Weapon, handler);
-        this.addKeyListener(new KeyInput(handler, this));
-        BufferedImageLoader loader = new BufferedImageLoader();
-        ArrayList<BufferedImage> maps = new ArrayList<BufferedImage>(5);
-        for (int i = 0; i < 5; i++) {
-            BufferedImage map = loader.loadiamge("/pic/maps/maprp" + i + ".png");
-            maps.add(map);
-        }
-        Random r = new Random();
-        background = loader.loadiamge("/pic/2386168-_mg_7306.png");
-        tex = new Texture();
-
-
-        new GameWindow(WIDTH, HEIGHT, "Stick Man Wars", this);
-        loadingthemap(maps.get(r.nextInt(4)));
-        //handler.addObject(new Sniper(50, 950, ID.Weapon, this.handler));
-        //add objects here, but remember to set the dimension in the class's constructor using setter method
-    }
+    Random r = new Random();
+    private Image background = null;
 
     public int getSpeed2() {
         return speed2;
@@ -61,8 +45,26 @@ public class Game extends Canvas implements Runnable{
     private Random rand;
     private HUD hud;
     static Texture tex;
-    Image background = null;
-    public int ammo = 10;  //da
+
+    public Game() {
+        handler = new Handler();
+        hud = new HUD();
+        weapon = new Weapon(0, 0, ID.Weapon, handler);
+        this.addKeyListener(new KeyInput(handler, this));
+        for (int i = 0; i < 5; i++) {
+            BufferedImage map = loader.loadiamge("/pic/maps/maprp" + i + ".png");
+            maps.add(map);
+        }
+
+        background = loader.loadiamge("/pic/2386168-_mg_7306.png");
+        tex = new Texture();
+
+
+        new GameWindow(WIDTH, HEIGHT, "Stick Man Wars", this);
+        loadingthemap(maps.get(r.nextInt(4)));
+        //handler.addObject(new Sniper(50, 950, ID.Weapon, this.handler));
+        //add objects here, but remember to set the dimension in the class's constructor using setter method
+    }
     private Weapon weapon;
 
     public int getRespawnpoint(int i) {
@@ -111,9 +113,27 @@ public class Game extends Canvas implements Runnable{
     private void tick(){
         handler.tick();
         hud.tick();
-        timer++;
+        if (numberofweps == 0) {
+            respawnweps(maps.get(r.nextInt(4)));
+            numberofweps = 4;
+        }
     }
-    
+
+    private void respawnweps(BufferedImage image) {
+        int w = image.getWidth(), h = image.getHeight();
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                int pixel = image.getRGB(i, j);
+                int red = (pixel >> 16) & 0xff;
+                int green = (pixel >> 8) & 0xff;
+                int blue = (pixel) & 0xff;
+                if (red == 0 && blue == 255 && green == 255) {
+                    handler.addObject(new Sniper(i * 32, j * 32, ID.Weapon, this.handler));
+
+                }
+            }
+        }
+    }
     private void render(){
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null)
@@ -152,6 +172,7 @@ public class Game extends Canvas implements Runnable{
     }
 
     public void setSpeed2(int i) {
+        speed2 = i;
     }
 
     public static Texture getinstance() {
@@ -178,6 +199,8 @@ public class Game extends Canvas implements Runnable{
                     respawnpoint[2] = i * 32;
                     respawnpoint[3] = j * 32;
                     handler.addObject(new StickMan(i * 32, j * 32, ID.StickMan2, handler, this));
+                } else if (red == 0 && blue == 255 && green == 255) {
+                    handler.addObject(new Sniper(i * 32, j * 32, ID.Weapon, this.handler));
 
                 }
             }
