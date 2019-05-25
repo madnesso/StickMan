@@ -3,12 +3,9 @@ package stickmanwars;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.Serializable;
 
 
-public class Menu extends MouseAdapter implements Serializable, WindowListener {
+public class Menu extends MouseAdapter {
 
     private Game game;
     private Handler handler;
@@ -29,35 +26,13 @@ public class Menu extends MouseAdapter implements Serializable, WindowListener {
         if (hover(px, py, 810, 250, 300, 150)) {
             game.gameState = State.game;
         }
-//        else if(hover(px, py, 810, 500, 300, 150)){
-//            try {
-//                //readData();
-//                game.gameState = State.game;
-//            } catch (IOException ex) {
-//                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (ClassNotFoundException ex) {
-//                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
+
         else if (hover(px, py, 810, 750, 300, 150)) {
             System.exit(1);
         }
     }
 
-//    public void readData() throws FileNotFoundException, IOException, ClassNotFoundException
-//    {
-//        ObjectInputStream Bin = new ObjectInputStream(new FileInputStream("game.bin"));
-//        this.game = (Game)Bin.readObject();
-//        Bin.close();
-//    }
 
-//    public void SaveData(Game game) throws FileNotFoundException, IOException
-//    {
-//        File myFile = new File("game.bin");
-//        ObjectOutputStream Bin = new ObjectOutputStream(new FileOutputStream(myFile));
-//        Bin.writeObject(game);
-//        Bin.close();
-//    }
 
     public void mouseReleased() {
 
@@ -90,11 +65,11 @@ public class Menu extends MouseAdapter implements Serializable, WindowListener {
             g.setColor(Color.WHITE);
             g.drawString("New Game", 875, 340);
 
-            g.setFont(font2);
+            /*g.setFont(font2);
             g.setColor(Color.BLACK);
             g.fillRect(810, 500, 300, 150);
             g.setColor(Color.WHITE);
-            g.drawString("Load Saved Game", 820, 590);
+            g.drawString("Load Saved Game", 820, 590);*/
 
             g.setFont(font2);
             g.setColor(Color.BLACK);
@@ -106,45 +81,7 @@ public class Menu extends MouseAdapter implements Serializable, WindowListener {
         }
     }
 
-    @Override
-    public void windowOpened(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public void windowClosing(WindowEvent e) {
-//        if (game.gameState == State.game){
-//            try {
-//                SaveData(game);
-//            } catch (IOException ex) {
-//                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            System.out.println("Saving");
-//        }
-    }
 
-    @Override
-    public void windowClosed(WindowEvent e) {
 
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

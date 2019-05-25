@@ -1,5 +1,5 @@
-
 package stickmanwars;
+
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -28,7 +28,7 @@ public class KeyInput extends KeyAdapter {
                         tempObject.setVelY(-15);
                         UP = true;
                         tempObject.setJumping(true);
-                        AudioPlayer.getSoundMap("jump").play();
+                        // AudioPlayer.getSoundMap("jump").play();
                     }
                 }
                 if (key == KeyEvent.VK_S) {
@@ -56,7 +56,7 @@ public class KeyInput extends KeyAdapter {
                         tempObject.setVelY(-15);
                         UP = true;
                         tempObject.setJumping(true);
-                        AudioPlayer.getSoundMap("jump").play();
+//                        AudioPlayer.getSoundMap("jump").play();
                     }
                 }
                 if (key == KeyEvent.VK_DOWN) {

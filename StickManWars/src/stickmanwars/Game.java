@@ -1,16 +1,13 @@
-
 package stickmanwars;
 
 import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Game extends Canvas implements Runnable, WindowListener, Serializable {
+public class Game extends Canvas implements Runnable, Serializable {
     public boolean[] isshooting = new boolean[2];
     static final int WIDTH = 1920, HEIGHT = 1080;
     public int ammo2 = 0;
@@ -21,21 +18,13 @@ public class Game extends Canvas implements Runnable, WindowListener, Serializab
     private int speed = 5;
     private int speed2 = 5;
     private int range = 100;
-    public State gameState;
+    public State gameState = State.menu;
     private Menu menu;
     private BufferedImageLoader loader = new BufferedImageLoader();
     private ArrayList<BufferedImage> maps = new ArrayList<BufferedImage>(5);
     private int[] respawnpoint = new int[4];
     private Random r = new Random();
     private Image background = null;
-
-//    public void SaveData() throws FileNotFoundException, IOException
-//    {
-//        File myFile = new File("game.bin");
-//        ObjectOutputStream Bin = new ObjectOutputStream(new FileOutputStream(myFile));
-//        Bin.writeObject(this.menu.getGame());
-//        Bin.close();
-//    }
 
 
     public int getSpeed2() {
@@ -66,7 +55,7 @@ public class Game extends Canvas implements Runnable, WindowListener, Serializab
         AudioPlayer.load();
         handler = new Handler();
         hud = new HUD();
-
+        menu = new Menu(this, handler);
         weapon = new Weapon(0, 0, ID.Weapon, handler);
         this.addKeyListener(new KeyInput(handler, this));
         this.addMouseListener(menu);
@@ -95,7 +84,7 @@ public class Game extends Canvas implements Runnable, WindowListener, Serializab
     public void setRange(int range) {
         this.range = range;
     }
-    
+
     @Override
     public void run() {
         this.requestFocus();
@@ -127,7 +116,7 @@ public class Game extends Canvas implements Runnable, WindowListener, Serializab
 
         stop();
     }
-    
+
     private void tick(){
         if (gameState == State.game) {
             handler.tick();
@@ -189,21 +178,22 @@ public class Game extends Canvas implements Runnable, WindowListener, Serializab
             menu.render(g);
         }
         g.dispose();
-        bs.show();     
+        bs.show();
     }
-    
+
     public synchronized void start()
     {
         thread = new Thread(this);
         thread.start();
         running = true;
     }
-    
+
     public synchronized void stop()
     {
         try{
-        thread.join();
-        running = false;}
+            thread.join();
+            running = false;
+        }
         catch(Exception e)
         {
             e.printStackTrace();
@@ -251,38 +241,4 @@ public class Game extends Canvas implements Runnable, WindowListener, Serializab
         }
     }
 
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
 }
