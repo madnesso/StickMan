@@ -78,6 +78,9 @@ public class KeyInput extends KeyAdapter {
                 }
             }
         }
+        if (key == KeyEvent.VK_ESCAPE) {
+            game.gameState = State.menu;
+        }
     }
 
     public void keyReleased(KeyEvent e) {

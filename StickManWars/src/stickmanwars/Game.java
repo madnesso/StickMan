@@ -136,6 +136,9 @@ public class Game extends Canvas implements Runnable, Serializable {
             if (isshooting[0] || isshooting[1]) {
                 AudioPlayer.getSoundMap("shoot").play();
             }
+            if (HUD.getHealth3() == 0 || HUD.getHealth4() == 0) {
+                gameState = State.end;
+            }
         } else if (gameState == State.menu || gameState == State.end) {
             menu.tick();
         }

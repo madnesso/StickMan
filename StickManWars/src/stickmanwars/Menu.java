@@ -77,7 +77,12 @@ public class Menu extends MouseAdapter {
             g.setColor(Color.WHITE);
             g.drawString("Quit", 920, 840);
         } else if (game.gameState == State.end) {
+            Font font = new Font("arial", 1, 50);
+            Font font2 = new Font("bold", 2, 35);
 
+            g.setFont(font);
+            g.setColor(Color.WHITE);
+            g.drawString("Game Over", 760, 120);
         }
     }
 
