@@ -39,11 +39,10 @@ public class KeyInput extends KeyAdapter {
                     tempObject.setVelX(10);
                     LEFT = true;
                 }
-                if (key == KeyEvent.VK_SPACE && !tempObject.setShooting && game.ammo != 0) {
+                if (key == KeyEvent.VK_SPACE && game.ammo != 0) {
                     handler.addObject(new Bullets((int) tempObject.getX() + (tempObject.getFacing() * 50), (int) tempObject.getY() + 10, ID.Bullets, tempObject.getFacing() * game.getSpeed(), this.handler, game));
-                    tempObject.setShooting = true;
                     game.ammo--;
-                } else tempObject.setShooting = false;
+                }
             }
             if (tempObject.getId() == ID.StickMan2) {
                 if (key == KeyEvent.VK_UP && !tempObject.isJumping()) {
@@ -65,11 +64,10 @@ public class KeyInput extends KeyAdapter {
                     tempObject.setVelX(10);
                     RIGHT = true;
                 }
-                if (key == KeyEvent.VK_CONTROL && !tempObject.setShooting && game.ammo2 != 0) {
+                if (key == KeyEvent.VK_CONTROL && game.ammo2 != 0) {
                     handler.addObject(new Bullets((int) tempObject.getX() + (tempObject.getFacing() * 50), (int) tempObject.getY() + 10, ID.Bullets, tempObject.getFacing() * game.getSpeed2(), this.handler, game));
-                    tempObject.setShooting = true;
                     game.ammo2--;
-                } else tempObject.setShooting = false;
+                }
             }
         }
     }
